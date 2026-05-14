@@ -91,5 +91,17 @@ interface ArbOwnerPublic {
     /// @notice Available in ArbOS version 60 and above
     function getMaxStylusContractFragments() external view returns (uint8);
 
+    /// @notice Retrieves the list of tx.from addresses in the custom pricer
+    function getPricerTxFromAddrs() external view returns (address[] memory);
+
+    /// @notice Retrieves the list of tx.to addresses in the custom pricer
+    function getPricerTxToAddrs() external view returns (address[] memory);
+
+    /// @notice See if the tx.from address is in the custom pricer
+    function isPricerTxFrom(address addr) external view returns (bool);
+
+    /// @notice See if the tx.to address is in the custom pricer
+    function isPricerTxTo(address addr) external view returns (bool);
+
     event ChainOwnerRectified(address rectifiedOwner);
 }

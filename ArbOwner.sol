@@ -415,6 +415,30 @@ interface ArbOwner {
         uint64 gas
     ) external;
 
+    /// @notice Retrieves the list of tx.from addresses in the custom pricer
+    function getPricerTxFromAddrs() external view returns (address[] memory);
+
+    /// @notice Retrieves the list of tx.to addresses in the custom pricer
+    function getPricerTxToAddrs() external view returns (address[] memory);
+
+    /// @notice Add a tx.from address to the custom pricer
+    function addPricerTxFrom(address addr) external;
+
+    /// @notice Add a tx.to address to the custom pricer
+    function addPricerTxTo(address addr) external;
+
+    /// @notice See if the tx.from address is in the custom pricer
+    function isPricerTxFrom(address addr) external view returns (bool);
+
+    /// @notice See if the tx.to address is in the custom pricer
+    function isPricerTxTo(address addr) external view returns (bool);
+
+    /// @notice Remove tx.from address from the custom pricer
+    function removePricerTxFrom(address addr) external;
+
+    /// @notice Remove tx.to address from the custom pricer
+    function removePricerTxTo(address addr) external;
+
     /// Emitted when a successful call is made to this precompile
     event OwnerActs(bytes4 indexed method, address indexed owner, bytes data);
 }
