@@ -46,4 +46,8 @@ interface DeriwBlacklist {
 
     /// @notice Remove target address from the blacklist
     function removeBlacklistTxTo(address addr) external;
+
+    /// @notice Schedule an independent DeriwOS consensus upgrade.
+    /// @dev The ArbOS version at scheduling time is recorded with the schedule.
+    function scheduleDeriwOSUpgrade(uint64 newVersion, uint64 timestamp) external;
 }

@@ -27,4 +27,13 @@ interface DeriwBlacklistPublic {
 
     /// @notice See if the target address is blacklisted
     function isBlacklistTxTo(address addr) external view returns (bool);
+
+    /// @notice Return the active ArbOS and DeriwOS versions as a compatibility pair.
+    function getDeriwOSVersion() external view returns (uint64 arbOSVersion, uint64 deriwOSVersion);
+
+    /// @notice Return the scheduled DeriwOS upgrade and ArbOS version recorded when scheduled.
+    function getScheduledDeriwOSUpgrade()
+        external
+        view
+        returns (uint64 newVersion, uint64 timestamp, uint64 scheduledAtArbOSVersion);
 }
