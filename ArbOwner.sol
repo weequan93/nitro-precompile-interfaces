@@ -17,6 +17,21 @@ import {ArbMultiGasConstraintsTypes} from "./ArbMultiGasConstraintsTypes.sol";
  *
  */
 interface ArbOwner {
+    /// @notice Stage a complete Deriw ArbSys route configuration.
+    /// @dev The update activates automatically at a block boundary after the
+    /// mandatory governance delay. The currently active route is unchanged
+    /// until then. Available in ArbOS version 60 and above.
+    function scheduleDeriwRouterConfig(
+        address router,
+        address canonicalGatewayRouter,
+        address[] calldata approvedTokenGateways,
+        uint64 activationTimestamp
+    ) external;
+
+    /// @notice Cancel a staged Deriw ArbSys route update.
+    /// @dev Does not change the active route. Available in ArbOS version 60 and above.
+    function cancelScheduledDeriwRouterConfig() external;
+
     /// @notice Emitted when an address is added as a transaction filterer.
     event TransactionFiltererAdded(address indexed filterer);
 

@@ -7,6 +7,31 @@ pragma solidity >=0.4.21 <0.9.0;
 /// @title Provides non-owners with info about the current chain owners.
 /// @notice Precompiled contract that exists in every Arbitrum chain at 0x000000000000000000000000000000000000006b.
 interface ArbOwnerPublic {
+    /// @notice Return the Deriw route currently enforced by ArbSys.
+    /// @dev A revision of zero means the route is not initialized.
+    function getDeriwRouterConfig()
+        external
+        view
+        returns (
+            address router,
+            address canonicalGatewayRouter,
+            address[] memory approvedTokenGateways,
+            uint64 revision
+        );
+
+    /// @notice Return the staged Deriw route replacement and activation time.
+    /// @dev A revision and activation timestamp of zero mean no update is pending.
+    function getScheduledDeriwRouterConfig()
+        external
+        view
+        returns (
+            address router,
+            address canonicalGatewayRouter,
+            address[] memory approvedTokenGateways,
+            uint64 revision,
+            uint64 activationTimestamp
+        );
+
     /// @notice See if the user is a chain owner
     function isChainOwner(
         address addr
