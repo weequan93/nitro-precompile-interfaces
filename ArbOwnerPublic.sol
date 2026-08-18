@@ -7,6 +7,16 @@ pragma solidity >=0.4.21 <0.9.0;
 /// @title Provides non-owners with info about the current chain owners.
 /// @notice Precompiled contract that exists in every Arbitrum chain at 0x000000000000000000000000000000000000006b.
 interface ArbOwnerPublic {
+    /// @notice Return the active ArbOS and DeriwOS versions.
+    function getDeriwOSVersion() external view returns (uint64 arbOSVersion, uint64 deriwOSVersion);
+
+    /// @notice Return the pending DeriwOS upgrade and the ArbOS version at scheduling time.
+    /// @dev Returns (0, 0, 0) when no upgrade is pending.
+    function getScheduledDeriwOSUpgrade()
+        external
+        view
+        returns (uint64 newVersion, uint64 timestamp, uint64 scheduledAtArbOSVersion);
+
     /// @notice Return the Deriw route currently enforced by ArbSys.
     /// @dev A revision of zero means the route is not initialized.
     function getDeriwRouterConfig()

@@ -17,6 +17,15 @@ import {ArbMultiGasConstraintsTypes} from "./ArbMultiGasConstraintsTypes.sol";
  *
  */
 interface ArbOwner {
+    /// @notice Schedule an independent DeriwOS consensus upgrade.
+    /// @dev This method is chain-owner-only and records the active ArbOS
+    /// version with the schedule. Available in ArbOS version 60 and above.
+    function scheduleDeriwOSUpgrade(uint64 newVersion, uint64 timestamp) external;
+
+    /// @notice Cancel a pending DeriwOS consensus upgrade.
+    /// @dev Available in ArbOS version 60 and above.
+    function cancelScheduledDeriwOSUpgrade() external;
+
     /// @notice Stage a complete Deriw ArbSys route configuration.
     /// @dev The update activates automatically at a block boundary after the
     /// mandatory governance delay. The currently active route is unchanged
