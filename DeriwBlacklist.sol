@@ -51,4 +51,38 @@ interface DeriwBlacklist {
     /// @dev Deprecated. This endpoint rejects DeriwOS 4 and every later
     /// version. Use ArbOwner.scheduleDeriwOSUpgrade instead.
     function scheduleDeriwOSUpgrade(uint64 newVersion, uint64 timestamp) external;
+
+    /// @dev Requires DeriwOS 6. One type per address, not a bitmask: 1 = ban all (legacy
+    /// enforcement), 2 = ERC20/USDT transfer ban (stored only, no DeriwOS
+    /// enforcement). Other values revert. Existing add methods use flag 1.
+    /// Legacy list/membership getters include every type; rejection requires flag 1.
+
+    /// @notice Filter the first 65536 direction-list entries by their stored ban flag.
+    function getBlacklistTxFromWithFlag(uint64 flag) external view returns (address[] memory);
+
+    /// @notice Check the address for the requested ban type.
+    function isBlacklistTxFromWithFlag(address addr, uint64 flag) external view returns (bool);
+
+    /// @notice Set the ban type, replacing the previous type in both direction lists.
+    function addBlacklistTxFromWithFlag(address addr, uint64 flag) external;
+
+    /// @notice Remove this direction for the requested type; reverts if absent.
+    /// @dev Quarantined owners must use the legacy removal method for recovery.
+    function removeBlacklistTxFromWithFlag(address addr, uint64 flag) external;
+
+    /// @notice Filter the first 65536 direction-list entries by their stored ban flag.
+    function getBlacklistTxToWithFlag(uint64 flag) external view returns (address[] memory);
+
+    /// @notice Check the address for the requested ban type.
+    function isBlacklistTxToWithFlag(address addr, uint64 flag) external view returns (bool);
+
+    /// @notice Set the ban type, replacing the previous type in both direction lists.
+    function addBlacklistTxToWithFlag(address addr, uint64 flag) external;
+
+    /// @notice Remove this direction for the requested type; reverts if absent.
+    /// @dev Quarantined owners must use the legacy removal method for recovery.
+    function removeBlacklistTxToWithFlag(address addr, uint64 flag) external;
+
+    /// @notice Return the address's ban type: 0 = unlisted, 1 = all, 2 = ERC20/USDT transfer.
+    function getBlacklistBanFlag(address addr) external view returns (uint64);
 }
